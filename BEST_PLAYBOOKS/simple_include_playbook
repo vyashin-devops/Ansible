@@ -1,0 +1,20 @@
+---
+ - name: Loop Playbook
+   hosts: slave1
+   become: yes
+
+   tasks: 
+   - name: Say HELLO
+     include: say_hello.yml 
+
+   - name: write Z
+     include: write_Z.yml
+
+#
+#
+#   - name: install many packages
+#     yum: name={{item}} state=installed
+#     loop:
+#       - tree
+#       - python3
+#       - mysql-client

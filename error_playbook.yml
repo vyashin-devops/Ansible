@@ -1,0 +1,28 @@
+---
+- name: Error Control
+  hosts: all
+  any_errors_fatal: true
+  become: yes
+
+  tasks:
+
+  - name: Task Number 1
+    yum: name=tree state=latest
+    ignore_errors: yes
+
+  - name: Task Number 2
+    shell: cat /home/myfile
+    register: results
+
+
+#++++++++++++++++++++++++++++++++++++++++++++++
+#    failed_when: results.rc == 1
+
+#   failed_when: "'World' in results.stdout"
+
+# - debug:
+#     var: results
+#++++++++++++++++++++++++++++++++++++++++++++++
+
+  - name: Task Number 3
+    command: echo Privet Mir!!! 

@@ -1,0 +1,54 @@
+---
+- name: Delegate to Server
+  hosts: all
+  become: yes
+
+  vars:
+    mytext: "Hello Isolyate People!"
+
+  tasks:
+  - name: Ping all Servers
+    ping:
+  
+  - name: Updating my Database
+    shell: echo Updating database.....
+    run_once: true
+
+  - name: Unregister Server from Load Balancer
+    shell: echo This server {{inventory_hostname}} was deregister from our Load Balancer, node name is {{ansible_nodename}} >> /home/log.txt
+    delegate_to: 127.0.0.1 
+
+  - name: Reboot my Servers
+    shell: sleep 3 && reboot now
+    async: 1
+    poll: 0
+   
+  - name: Wait till my Servers come up
+    wait_for:
+        host: "{{inventory_hostname}}"
+        state: started
+        delay: 10
+        timeout: 25
+    delegate_to: 127.0.0.1
+   
+  - name: Ping all Servers
+    ping:  
+
+
+    
+ # - name: Create file1
+ #   copy:
+ #     dest: /home/file1
+ #     content: |
+ #       This is File1
+ #       On Eng HelloWorld
+ #       On Rus {{mytext}}
+ #   delegate_to: slave1
+#
+ # - name: Create file2
+ #   copy:
+ #     dest: /home/file2
+ #     content: |
+ #       This is File2
+ #       On Eng HelloWorld
+ #       On Rus {{mytext}}

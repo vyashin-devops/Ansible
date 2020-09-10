@@ -1,0 +1,10 @@
+---
+
+- name: Say Hello to all
+  debug: msg="Hello, {{item}}"
+  loop:
+    - "Vasya"
+    - "Petya"
+    - "Masha"
+    - "Olya"
+

@@ -1,0 +1,11 @@
+[STAGING_SERVERS]
+slave1 ansible_host=10.82.2.30
+slave2 ansible_host=10.82.2.21
+
+[PROD_SERVERS]
+slave3 ansible_host=10.82.2.14
+slave4 ansible_host=10.82.2.16
+
+[ALL:children]
+STAGING_SERVERS
+PROD_SERVERS
